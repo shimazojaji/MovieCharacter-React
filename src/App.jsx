@@ -1,67 +1,36 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import useCharacters from "./hooks/useCharacters";
-// import { allCharacters } from "../data/data";
+
+import Navbar from "./components/Navbar";
+import { Toaster } from "react-hot-toast";
+import { FavoriteProvider } from "./context/FavoriteContex";
+import { SelectItemProvider } from "./context/SelectedItemContex";
+import useCharacter from "./hooks/useCharacter";
+import { useState } from "react";
 import CharacterList from "./components/CharacterList";
 import CharecterDetail from "./components/CharecterDetail";
-import Navbar, { Search, SearchResult, Favourites } from "./components/Navbar";
-import Loader from "./components/Loader";
-import toast, { Toaster } from "react-hot-toast";
-import useCharacter from "./hooks/useCharacters";
-import useLocalStorage from "./hooks/useLocalStorage";
-
-// import axios from "axios";
+import { CharDetailModalProvider } from "./context/charDetailModalContext";
 
 function App() {
-  
   const [query, setQuery] = useState("");
-  const {isLoading,characters}=useCharacters("https://rickandmortyapi.com/api/character?name",query);
-  const [selectedId, setSelectedId] = useState(null);
-  const [favourites,setFavourites]=useLocalStorage("FAVORITES",[]);
-  
-
-// useEffect(()=>{
-// localStorage.setItem("FAVORITES",JSON.stringify(favourites));
-// },[favourites])
-
-
-  const handleSelectCharacter = (id) => {
-    setSelectedId((prevId) => (prevId === id ? null : id));
-  };
-
-  const handleAddFavourite = (char) => {
-    setFavourites((preFav) => [...preFav, char]);
-  };
-
-  const handleDeleteFavourite=(id)=>{
-    setFavourites((preFav)=> preFav.filter((fav)=>fav.id!==id))
-  }
-
-  const isAddToFavourite = favourites.map((fav) => fav.id).includes(selectedId);
+  const { characters, isLoading } = useCharacter(
+    "https://rickandmortyapi.com/api/character/?name",
+    query
+  );
 
   return (
-    <div className="app">
+    <div>
       <Toaster />
-      <Navbar>
-        <Search query={query} setQuery={setQuery} />
-        <SearchResult numOfResult={characters.length} />
-        <Favourites favourites={favourites} onDeleteFavourite={handleDeleteFavourite}/>
-      </Navbar>
-
-      <Main>
-        <CharacterList
-          selectedId={selectedId}
-          characters={characters}
-          isLoading={isLoading}
-          onSelectorCharacter={handleSelectCharacter}
-        />
-
-        <CharecterDetail
-          selectedId={selectedId}
-          onAddFavourite={handleAddFavourite}
-          isAddToFavourite={isAddToFavourite}
-        />
-      </Main>
+      <CharDetailModalProvider>
+        <FavoriteProvider>
+          <SelectItemProvider>
+            <Navbar query={query} setQuery={setQuery} characters={characters} />
+            <Main>
+              <CharacterList characters={characters} isLoading={isLoading} />
+              <CharecterDetail />
+            </Main>
+          </SelectItemProvider>
+        </FavoriteProvider>
+      </CharDetailModalProvider>
     </div>
   );
 }

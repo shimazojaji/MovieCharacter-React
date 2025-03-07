@@ -1,13 +1,20 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import Loader from "./Loader";
-import { Children } from "react";
+import { useCallback } from "react";
+import { useSelectedItem } from "../context/SelectedItemContex";
+import { useCharDetailModal } from "../context/charDetailModalContext";
+function CharacterList({ characters, isLoading }) {
+  const { selectedId, selectCharacter } = useSelectedItem();
+  const { setOpenCharModal } = useCharDetailModal();
 
-function CharacterList({
-  characters,
-  isLoading,
-  onSelectorCharacter,
-  selectedId,
-}) {
+  const handleRedEyeIcon = useCallback(
+    (id) => {
+      selectCharacter(id);
+      setOpenCharModal((prev) => !prev);
+    },
+    [selectCharacter]
+  );
+
   if (isLoading)
     return (
       <div className="characters-list">
@@ -21,7 +28,7 @@ function CharacterList({
         <Character key={item.id} item={item}>
           <button
             className="icon red"
-            onClick={() => onSelectorCharacter(item.id)}
+            onClick={() => handleRedEyeIcon(item.id)}
           >
             {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
           </button>
@@ -48,7 +55,7 @@ function CharacterName({ item }) {
   return (
     <h3 className="name">
       <span>{item.gender === "Male" ? "👨" : "👩‍🦰"}</span>
-      <span>&nbsp;{item.name}</span>
+      <span>{item.name}</span>
     </h3>
   );
 }

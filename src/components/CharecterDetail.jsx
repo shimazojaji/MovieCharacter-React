@@ -1,15 +1,23 @@
 import { useEffect } from "react";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
-// import { episodes } from "../../data/data";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useState } from "react";
 import axios from "axios";
 import Loader from "./Loader";
+import Modal from "./Modal";
+import { useSelectedItem } from "../context/SelectedItemContex";
+import { useFavorite } from "../context/FavoriteContex";
+import { useCharDetailModal } from "../context/charDetailModalContext";
 
-function CharecterDetail({ selectedId, onAddFavourite, isAddToFavourite }) {
+function CharecterDetail() {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(1024);
+  const { selectedId } = useSelectedItem();
+  const { favorites, addFavorite } = useFavorite();
+  const isAddToFavourite = favorites.map((fav) => fav.id).includes(selectedId);
+  const { isOpenCharModal, setOpenCharModal } = useCharDetailModal();
 
   useEffect(() => {
     async function fetchData() {
@@ -38,34 +46,62 @@ function CharecterDetail({ selectedId, onAddFavourite, isAddToFavourite }) {
     if (selectedId) fetchData();
   }, [selectedId]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
   if (isLoading)
     return (
-      <div style={{ flex: 1, color: "var(--slate-300)" }}>
+      <div style={{ flex: 1 }}>
         <Loader />
       </div>
     );
 
   if (!character || !selectedId)
-    return (
-      <div style={{ flex: 1, color: "var(--slate-300)" }}>
-        Please select a character.
-      </div>
-    );
+    return <div className="characters-message">Please select a character.</div>;
+
   return (
-    <div style={{ flex: 1 }}>
-      <CharacterSubInfo
-        character={character}
-        isAddToFavourite={isAddToFavourite}
-        onAddFavourite={onAddFavourite}
-      />
-      <EpisodeList episodes={episodes} />
-    </div>
+    <>
+      {windowWidth >= 480 ? (
+        <div className="characters-detail">
+          <CharacterSubInfo
+            character={character}
+            isAddToFavourite={isAddToFavourite}
+            onAddFavourite={addFavorite}
+          />
+          <EpisodeList episodes={episodes} />
+        </div>
+      ) : (
+        <Modal
+          onOpen={setOpenCharModal}
+          open={isOpenCharModal}
+          title="Character details"
+          type="custom"
+        >
+          <CharacterSubInfo
+            character={character}
+            isAddToFavourite={isAddToFavourite}
+            onAddFavourite={addFavorite}
+          />
+          <EpisodeList episodes={episodes} />
+        </Modal>
+      )}
+    </>
   );
 }
 
 export default CharecterDetail;
 
-function CharacterSubInfo({ character, isAddToFavourite, onAddFavourite }) {
+export function CharacterSubInfo({
+  character,
+  isAddToFavourite,
+  onAddFavourite,
+}) {
   return (
     <div className="character-detail">
       <img
@@ -107,7 +143,7 @@ function CharacterSubInfo({ character, isAddToFavourite, onAddFavourite }) {
   );
 }
 
-function EpisodeList({ episodes }) {
+export function EpisodeList({ episodes }) {
   const [sortBy, setSortby] = useState(true);
   let sortedEpisode;
   if (sortBy) {
