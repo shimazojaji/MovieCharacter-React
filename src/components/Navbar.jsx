@@ -23,8 +23,9 @@ function Logo() {
     <span className="navbar__logo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-         xmlnsXlink="http://www.w3.org/1999/xlink"
         fill="none"
+        width={24}
+        height={24}
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="var(--slate-400)"
