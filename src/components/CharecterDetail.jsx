@@ -57,9 +57,22 @@ function CharecterDetail() {
 
   if (isLoading)
     return (
-      <div style={{ flex: 1 }}>
-        <Loader />
-      </div>
+      <>
+        {windowWidth >= 480 ? (
+          <div style={{ flex: 1 }}>
+            <Loader />
+          </div>
+        ) : (
+          <Modal
+            onOpen={setOpenCharModal}
+            open={isOpenCharModal}
+            title="Character details"
+            type="custom"
+          >
+            <Loader />
+          </Modal>
+        )}
+      </>
     );
 
   if (!character || !selectedId)
