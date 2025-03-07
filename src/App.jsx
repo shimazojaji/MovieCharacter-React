@@ -1,5 +1,4 @@
 import "./App.css";
-
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { FavoriteProvider } from "./context/FavoriteContex";
@@ -8,7 +7,7 @@ import useCharacter from "./hooks/useCharacter";
 import { useState } from "react";
 import CharacterList from "./components/CharacterList";
 import CharecterDetail from "./components/CharecterDetail";
-import { CharDetailModalProvider } from "./context/charDetailModalContext";
+import { CharDetailModalProvider } from "./context/CharacterModalContext";
 
 function App() {
   const [query, setQuery] = useState("");

@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import Modal from "./Modal";
 import { useSelectedItem } from "../context/SelectedItemContex";
 import { useFavorite } from "../context/FavoriteContex";
-import { useCharDetailModal } from "../context/charDetailModalContext";
+import { useCharDetailModal } from "../context/CharacterModalContext";
 
 function CharecterDetail() {
   const [character, setCharacter] = useState(null);
