@@ -1,15 +1,13 @@
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { useSelectedItem } from "../context/SelectedItemContex";
-import { useCallback } from "react";
 function Modal({ title, children, onOpen, open, type = "normal" }) {
   const { selectCharacter } = useSelectedItem();
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     if (type === "custom") {
       selectCharacter(null);
     }
-
     onOpen(false);
-  }, [selectCharacter, onOpen]);
+  };
 
   if (!open) return null;
   return (

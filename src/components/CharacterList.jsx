@@ -7,13 +7,10 @@ function CharacterList({ characters, isLoading }) {
   const { selectedId, selectCharacter } = useSelectedItem();
   const { setOpenCharModal } = useCharDetailModal();
 
-  const handleRedEyeIcon = useCallback(
-    (id) => {
-      selectCharacter(id);
-      setOpenCharModal((prev) => !prev);
-    },
-    [selectCharacter]
-  );
+  const handleRedEyeIcon = (id) => {
+    selectCharacter(id);
+    setOpenCharModal((prev) => !prev);
+  };
 
   if (isLoading)
     return (

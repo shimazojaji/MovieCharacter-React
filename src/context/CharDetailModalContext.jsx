@@ -7,9 +7,7 @@ const charDetialModalContext = createContext(null);
 
 export const CharDetailModalProvider = ({ children }) => {
   const [isOpenCharModal, setOpenCharModal] = useState(false);
-  // const setCharModal= () => {
-  //     setOpenCharModal((prev) => (!prev));
-  // };
+
 
   return (
     <charDetialModalContext.Provider
