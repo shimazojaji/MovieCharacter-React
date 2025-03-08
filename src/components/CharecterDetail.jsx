@@ -58,7 +58,7 @@ function CharecterDetail() {
   if (isLoading)
     return (
       <>
-        {windowWidth >= 480 ? (
+        {windowWidth > 480 ? (
           <div style={{ flex: 1 }}>
             <Loader />
           </div>
@@ -80,7 +80,7 @@ function CharecterDetail() {
 
   return (
     <>
-      {windowWidth >= 480 ? (
+      {windowWidth > 480 ? (
         <div className="characters-detail">
           <CharacterSubInfo
             character={character}

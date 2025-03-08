@@ -5,7 +5,7 @@
   padding: 1.5rem;
 }
 
-@media screen and(min-width:480px) {
+@media screen and(min-width:481px) {
   #root {
     padding: 4rem;
   }
@@ -190,7 +190,7 @@
   background-color: var(--rose-600);
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 481px) {
   .characters-list {
     width: 50%;
   }
@@ -213,7 +213,7 @@
   }
 }
 
-@media screen and (min-width: 375px) and (max-width: 479px) {
+@media screen and (min-width: 375px) and (max-width: 480px) {
   .list__item {
     grid-template-columns: 5rem 1fr 2rem;
   }
@@ -356,7 +356,7 @@
   padding: 0.5rem 0;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 481px) {
   .characters-message {
     display: inline-flex;
     width: 50%;

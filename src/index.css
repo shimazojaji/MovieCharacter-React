@@ -40,7 +40,7 @@ button {
   border-radius: 0.5rem;
   color: var(--slate-100);
   background-color: var(--slate-500);
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   width: 18rem;
 }
 .text-field:focus,
@@ -50,7 +50,7 @@ button {
   box-shadow: 0 0 0 4px rgb(0 48 73 / 10%);
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 481px) {
   .text-field {
     padding: 1rem;
     width: 20rem;
@@ -65,7 +65,6 @@ button {
 @media screen and (min-width: 1024px) {
   .text-field {
     width: 30rem;
-    font-size: 1.6rem;
   }
   .text-field::placeholder {
     font-size: 1.6rem;
@@ -103,8 +102,10 @@ button {
 
 .modal,
 .custom-modal {
-  width: 98%;
+  width: 95%;
   min-height: 250px;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -115,7 +116,6 @@ button {
   box-shadow: 1px 1px 50px var(--slate-600);
   overflow-y: auto;
 }
-
 
 .modal__header {
   display: flex;
@@ -179,6 +179,9 @@ button {
   position: fixed;
   inset: 0;
   background-color: rgba(63, 69, 76, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loader-container {
