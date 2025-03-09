@@ -1,6 +1,5 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 import Loader from "./Loader";
-import { useCallback } from "react";
 import { useSelectedItem } from "../context/SelectedItemContex";
 import { useCharDetailModal } from "../context/CharacterModalContext";
 function CharacterList({ characters, isLoading }) {
